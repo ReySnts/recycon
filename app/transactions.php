@@ -20,13 +20,14 @@ class transactions extends Model
 
     ];
 
-    public function users()
-    {
-        return $this->hasMany(users::class);
-    }
 
     public function items()
     {
-        return $this->hasMany(items::class);
+        return $this->belongsToMany(items::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(transactions::class);
     }
 }

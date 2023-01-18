@@ -1,0 +1,1 @@
+<?php /**PATH C:\Users\MSI-PC\Desktop\recycon-main\recycon\resources\views/footer.blade.php ENDPATH**/ ?>
