@@ -6,11 +6,11 @@ use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register_page(){
+    public function register_page()
+    {
         return view('register');
     }
 
@@ -28,7 +28,7 @@ class AuthController extends Controller
         ]
 
         );
-        $validated['password'] = Hash::make($validated['password']);
+        $validated['password'] = ($validated['password']);
         DB::table('users')->insert([
             [
                 'username' => $validated['username'],
@@ -38,26 +38,31 @@ class AuthController extends Controller
             ]
         ]);
 
-        return redirect(route('login'))->with('success', 'Register Success');
+        return redirect(route('home'))->with('success', 'Register Success');
     }
 
-    public function login_page(){
+    public function login_page()
+    {
         return view('login');
     }
-    public function login(Request $req){
+
+    public function login(Request $req)
+    {
         $credentials = $req->validate([
-            'email' => ['email:dns', 'required'],
+            'username' => ['required'],
             'password' => ['required'],
         ]);
 
         $remember_me = $req->has('remember_me') ? true : false;
         if(Auth::attempt($credentials,$remember_me)){
             $req->session()->regenerate();
-            return redirect()->intended(route('main'));
+            return redirect(route('home'));
         }
         return back()->with('loginError', 'Login Failed!');
     }
-    public function logout(Request $request){
+
+    public function logout(Request $request)
+    {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

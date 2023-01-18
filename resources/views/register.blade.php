@@ -1,38 +1,43 @@
 @extends('main')
 
 @section('content')
-<div class="flex justify-center items-center min-h-full w-full mt-24">
-    <form action="/register/jobseeker" method="post" class="flex flex-col w-2/4 space-y-4">
-        <h1 class="text-sky-900 text-xl">Register</h1>
-        @csrf
-        <input type="text" name="name" class="border p-4 @error('name')is-invalid @enderror" required autofocus value="{{old ('name')}}" id="floatingInput" placeholder="Username">
-        @error('name')
-          <a>
-              error
-           </a>
-        @enderror
 
-        <input type="email" name="email" class="border p-4 @error('email') is-invalid @enderror" required  value="{{old ('email')}}" id="floatingInput" placeholder="Enter Email">
-        @error('email')
-          <a>
-              error
-           </a>
-        @enderror
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
 
-        <input type="password" name="password" required class="border p-4 @error('password') is-invalid @enderror" id="floatingPassword" placeholder="Password">
-        @error('password')
-          <a>
-                error
-           </a>
-        @enderror
+            @if (session('status'))
+                <h6 class="alert alert-success">{{ session('status') }}</h6>
+            @endif
 
-        <input type="password" name="repassword" class="border p-4 @error('repassword') is-invalid @enderror" id="floatingPassword" placeholder="Re-enter password">
-        @error  ('repassword')
-            <a>
-                error
-            </a>
-        @enderror
-        <button class="bg-yellow-300 rounded-md py-2 px-4 self-end hover:font-bold" type="submit">Register Now</button>
-    </form>
+                <div class="card-body">
+                    <form action="{{ url('/register') }}" method="POST">
+                        @csrf
+
+                        <div class="form-group mb-3">
+                            <label for="">username</label>
+                            <input type="text" name="username" class="form-control">
+                        </div>
+                        <div type="email" class="form-group mb-3">
+                            <label for="">email</label>
+                            <input type="text" name="email_address" class="form-control">
+                        </div>
+                        <div type="password" class="form-group mb-3">
+                            <label for="">password</label>
+                            <input type="text" name="password" class="form-control">
+                        </div>
+                        <div type="password" class="form-group mb-3">
+                            <label for="">repeat password</label>
+                            <input type="text" name="repassword" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 @endsection
