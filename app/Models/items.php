@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -8,18 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class items extends Model
 {
     use HasFactory;
-    protected $table = 'items';
-    protected $primarykey = 'id';
-    protected $fillable =
-    [
-        'name',
-        'price',
-        'description',
-        'image',
-        'category'
-    ];
 
-    public function belongsToOneTransaction()
+    public function belongsToManyTransactions()
     {
         return $this->belongsTo(transactions::class, 'item_id', 'id');
     }

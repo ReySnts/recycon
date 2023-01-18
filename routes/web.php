@@ -26,3 +26,6 @@ Route::get('/login', [Controller::class, 'login']
 
 Route::get('/register', [Controller::class, 'login']
 )->name('register_route');
+
+Route::get('/view-product-detail/{id}', [Controller::class, 'viewProductDetail']
+)->name('view-product-detail_route');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -8,15 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class users extends Model
 {
     use HasFactory;
-    protected $table = 'users';
-    protected $primarykey = 'id';
-    protected $fillable =
-    [
-        'username',
-        'email_address',
-        'password',
-        'is_admin'
-    ];
 
     public function belongsToManyTransactions()
     {
