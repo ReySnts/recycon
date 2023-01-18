@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home_route');
+
+Route::get('/show-product', [Controller::class, 'showProduct']
+)->name('show_product_route');
+
+Route::get('/login', [Controller::class, 'login']
+)->name('login_route');
+
+Route::get('/register', [Controller::class, 'login']
+)->name('register_route');
