@@ -5,20 +5,26 @@
         <div class="col-md-6">
 
                 <div class="card-body">
-                    <form action="<?php echo e(url('login')); ?>" method="POST">
+                    <form action="<?php echo e(route('login')); ?>" method="POST">
                         <?php echo csrf_field(); ?>
 
-                        <div type="email" class="form-group mb-3">
+                        <div type="email" class="form-group">
                             <label for="">username</label>
                             <input type="text" name="username" class="form-control">
                         </div>
 
-                        <div type="password" class="form-group mb-3">
+                        <div type="password" class="form-group">
                             <label for="">password</label>
                             <input type="text" name="password" class="form-control">
                         </div>
 
-                        <div class="form-group mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="inlineFormCheck", name="remember_me">
+                            <label class="form-check-label" for="inlineFormCheck">
+                            Remember me
+                        </div>
+
+                        <div class="form-group">
                             <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                     </form>

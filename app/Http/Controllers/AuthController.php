@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
+use Illuminate\Cookie\CookieJar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
@@ -23,10 +25,6 @@ class AuthController extends Controller
             'repassword' => ['same:password']
         ],
 
-        [
-            'repassword.same' => "Password don't match"
-        ]
-
         );
         $validated['password'] = ($validated['password']);
         DB::table('users')->insert([
@@ -38,7 +36,7 @@ class AuthController extends Controller
             ]
         ]);
 
-        return redirect(route('home'))->with('success', 'Register Success');
+        return redirect(route('home'));
     }
 
     public function login_page()
@@ -46,20 +44,31 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function login(Request $req)
-    {
-        $credentials = $req->validate([
-            'username' => ['required'],
-            'password' => ['required'],
-        ]);
 
-        $remember_me = $req->has('remember_me') ? true : false;
-        if(Auth::attempt($credentials,$remember_me)){
-            $req->session()->regenerate();
-            return redirect(route('home'));
+    public function login(Request $request){
+
+        $username = $request->username;
+        $password = $request->password;
+        $remember = $request->remember;
+
+        $login = DB::table('users')->where('username', $username)->where('password', $password)->first();
+
+        if($login){
+            session
+            ([
+                    'username' => $login->username,
+                    'password' => $login->password
+            ]);
+
+            if($remember){
+                Cookie::queue('cookieEmail', $username, 60*365);
+                Cookie::queue('cookiePass', $password, 60*365);
+            }
+
+            return redirect('/');
         }
-        return back()->with('loginError', 'Login Failed!');
     }
+
 
     public function logout(Request $request)
     {
